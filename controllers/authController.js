@@ -23,7 +23,14 @@ exports.registerUser = async (req, res) => {
         await user.save();
         const token = generateToken(user.email);  // Include only the email in the token
 
-        res.status(201).json({ message: 'User registered successfully', token });
+        res.status(201).json({
+            message: 'User registered successfully',
+            token,
+            user: {
+                username: user.username,
+                email: user.email,
+            }
+        });
     } catch (err) {
         res.status(500).json({ message: 'Server error' });
     }
@@ -42,7 +49,14 @@ exports.loginUser = async (req, res) => {
 
         const token = generateToken(user.email);  // Include only the email in the token
 
-        res.status(200).json({ message: 'Login successful', token });
+        res.status(200).json({
+            message: 'Login successful',
+            token,
+            user: {
+                username: user.username,
+                email: user.email,
+            }
+        });
     } catch (err) {
         res.status(500).json({ message: 'Server error' });
     }
